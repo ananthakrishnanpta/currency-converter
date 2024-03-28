@@ -1,54 +1,90 @@
 <html>
     <head>
+
     </head>
+    
     <body>
         <h1>Currency Converter</h1>
         <form>
-            <label>From:</label>
+            
+            <label for="From">From:</label>
             <select id="From">
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="INR">INR</option>
             </select>
+
             <label>To:</label>
             <select id="to">
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="INR" selected>INR</option>
             </select>
+            
             <br>
-            <label>Amount To Conveter</label>
+            
+            <label>Amount To Convert: </label>
+            
             <input type="text" id="amount">
             <button type="button" id="convert">Convert</button><br>
             <label>Result Amount</label>
             <p id="result"></p>
-            <script>
-                const to=document.getElementById("to")
-                const from=document.getElementById("From")
-                const convert=document.getElementById("convert")
-                const result=document.getElementById("result")
-                const amount=document.getElementById("amount")
+            
 
-                 
+
+            <!-- Scripts start here ....................................................................................... -->
+
+            <script>
+
+                // Storing access to HTML document elements inside JS variables
+                const to        =   document.getElementById("to")
+                const from      =   document.getElementById("From")
+                const convert   =   document.getElementById("convert")
+                const result    =   document.getElementById("result")
+                const amount    =   document.getElementById("amount")
+
+                // The code below access the button with id "convert"
+                // The code is adding an event listener to the button
+                // This tracks the events associated with the button
+                // One of the mostly used events is a mouse click.
+                // addEventListener is a fn in JS which detects events.
+                // The function takes in several arguments.
+                // Here we are giving:
+                //  i. The event to track i.e., "click"
+                //  ii.The function to run once the event is detected.
+
+
                 convert.addEventListener("click",function()
                 {
-                    let fromCurrency=from.value;
+                    let fromCurrency    =   from.value;
                     console.log(fromCurrency);
-                    let toCurrency=to.value;
-                    let amt=amount.value;
-                    fetch_url = 'https://open.er-api.com/v6/latest/' + fromCurrency
+                    let toCurrency      =   to.value;
+                    let amt             =   amount.value;
+                    fetch_url           =   'https://open.er-api.com/v6/latest/' + fromCurrency
                     fetch(fetch_url)
                     .then(res=>{
                         return res.json();
                     })
                     .then(data=>
                     {
-                        let rate=data.rates[toCurrency];
-                        let total=rate*amt;
-                        result.innerHTML="total:" +total;
+                        let rate        =   data.rates[toCurrency];
+                        let total       =   rate*amt;
+                        result.innerHTML=   "total:" +total;
                         console.log(total);
                     });
-                });
+                }
+                
+                );
+
+
+                function convert_usd_to_inr(dollars){
+                    let rate = 83;
+                    return dollars * rate;
+                }
+
+
+
+
             </script>
         </form>
     </body>
