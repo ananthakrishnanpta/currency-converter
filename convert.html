@@ -42,7 +42,7 @@
                 const convert   =   document.getElementById("convert")
                 const result    =   document.getElementById("result")
                 const amount    =   document.getElementById("amount")
-
+                
                 // The code below access the button with id "convert"
                 // The code is adding an event listener to the button
                 // This tracks the events associated with the button
@@ -54,33 +54,49 @@
                 //  ii.The function to run once the event is detected.
 
 
-                convert.addEventListener("click",function()
+                // The below code is equivalent to :
+                // document.getElementById("convert").addEventListener("click",function(){ <function logic> };
+                convert.addEventListener("click", convert_function
+                
+                );
+
+                function convert_function()
+                // addEventListener("<type-of-event",<function-to-run-when-event-is-detected>)
                 {
-                    let fromCurrency    =   from.value;
-                    console.log(fromCurrency);
+                    // 'let' keyword helps you declare function-scoped variables.
+                    // These variables are not accessible outside the function definition
+                    let fromCurrency    =   from.value; // function scoped variable to store value of 'from' currency element
+
+                    // The following two lines of console.log helped us to debug the value for the 'from' dropdown 
+                    // console.log("Following is the -from- currency provided by the user : ")
+                    // console.log(fromCurrency);
+
                     let toCurrency      =   to.value;
                     let amt             =   amount.value;
                     fetch_url           =   'https://open.er-api.com/v6/latest/' + fromCurrency
                     fetch(fetch_url)
-                    .then(res=>{
+                     .then(
+                        (res) =>{
                         return res.json();
-                    })
-                    .then(data=>
+                    }
+                    )
+                    .then(
+                        (data)=>
                     {
-                        let rate        =   data.rates[toCurrency];
-                        let total       =   rate*amt;
-                        result.innerHTML=   "total:" +total;
-                        console.log(total);
-                    });
+                        let rate        =   data.rates[toCurrency]; // 83.33 in case of USD to INR conversion
+                        // in Case the fromCurrency was selected as USD and the to was selected as 'INR', 
+                        // The above code will become data.rates['INR']
+                        let total       =   rate * amt; // amount types multiplied by the rate of conversion, for eg. 1000 * 83.33
+                        result.innerHTML=   "total:" +total; //Putting the result into the 'result' id element in the HTML
+                        console.log(total); // This does nothing on the HTML, this is just to see the result on console
+                    }
+                    );
                 }
-                
-                );
 
-
-                function convert_usd_to_inr(dollars){
-                    let rate = 83;
-                    return dollars * rate;
-                }
+                // function convert_usd_to_inr(dollars){
+                //     let rate = 83;
+                //     return dollars * rate;
+                // }
 
 
 
